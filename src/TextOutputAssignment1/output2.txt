@@ -1,0 +1,2 @@
+case6.txt
+identifiers:9
