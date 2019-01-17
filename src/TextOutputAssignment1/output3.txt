@@ -1,2 +1,2 @@
-case2.txt
-identifiers:4
+case3.txt
+identifiers:6

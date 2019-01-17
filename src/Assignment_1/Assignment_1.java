@@ -58,7 +58,7 @@ public class Assignment_1 {
             StringTokenizer st = new StringTokenizer(line, delimiter);
             while (st.hasMoreTokens()) {
                 String temp = st.nextToken();
-                if (!Arrays.asList(keyWords).contains(temp) && !delimitersUsed.contains(temp) && startsAlpha(temp) && isAlphaAndNum(temp)) {
+                if (!Arrays.asList(keyWords).contains(temp) && !delimitersUsed.contains(temp) && isAlphaAndNum(temp)) {
                     delimitersUsed.add(temp);
                     countIdentifiers++;
                 }
@@ -87,15 +87,11 @@ public class Assignment_1 {
     private static boolean isAlphaAndNum(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
-            if (!(Character.isLetter(c) || Character.isDigit(c))) {
+            if (Character.isLetter(name.charAt(0)) && (!(Character.isLetter(c) || Character.isDigit(c)))) {
                 return false;
             }
         }
         return true;
-    }
-
-    private static boolean startsAlpha(String name) {
-        return Character.isLetter(name.charAt(0));
     }
 
     private static String prepareAnsForText(int num, String caseName) {
