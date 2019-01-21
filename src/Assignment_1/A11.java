@@ -5,11 +5,11 @@ import java.util.*;
 
 public class A11 {
     public static void main(String[] args) throws Exception {
-        String content = new String(Files.readAllBytes(Paths.get(args[0])));
+        String temp, content = new String(Files.readAllBytes(Paths.get(args[0])));
         StringTokenizer st = new StringTokenizer(content, " !@#$%^&*()_+-=:;<>,?/'{}[]|\\~`\n");
         LinkedHashSet<String> identifiersUsed = new LinkedHashSet<>(Arrays.asList("WRITE", "READ", "IF", "ELSE", "RETURN", "BEGIN", "END", "MAIN", "STRING", "INT", "REAL"));
         while (st.hasMoreTokens()) {
-            String temp = st.nextToken();
+            temp = st.nextToken();
             if (isAlphaAndNum(temp)) identifiersUsed.add(temp);
         }
         Files.write(Paths.get("./A1.output"), ("Identifiers: " + (identifiersUsed.size() - 11)).getBytes());
