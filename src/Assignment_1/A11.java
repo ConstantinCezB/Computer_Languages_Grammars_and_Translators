@@ -5,19 +5,29 @@ import java.util.*;
 
 public class A11 {
     public static void main(String[] args) throws Exception {
-        String temp, content = new String(Files.readAllBytes(Paths.get(args[0])));
-        StringTokenizer st = new StringTokenizer(content, " !@#$%^&*()_+-=:;<>,?/'{}[]|\\~`\n");
+        String content = new String(Files.readAllBytes(Paths.get(args[0])));
         LinkedHashSet<String> identifiersUsed = new LinkedHashSet<>(Arrays.asList("WRITE", "READ", "IF", "ELSE", "RETURN", "BEGIN", "END", "MAIN", "STRING", "INT", "REAL"));
-        while (st.hasMoreTokens()) {
-            temp = st.nextToken();
-            if (isAlphaAndNum(temp)) identifiersUsed.add(temp);
+        int start = 0, pos;
+        boolean found = false;
+
+        for (int i = 0; i < content.length(); i++){
+            char c = content.charAt(i);
+            if(Character.isLetter(c) && !found){
+                found = true;
+                start = i;
+            }
+            if (c == '"') {
+                if ((pos = isQuoted(content.substring(i + 1), i))!= -1) i = pos;
+            }
+            if (!Character.isLetterOrDigit(c) && found) {
+                    found = false;
+                    identifiersUsed.add(content.substring(start, i));
+            }
         }
         Files.write(Paths.get("./A1.output"), ("Identifiers: " + (identifiersUsed.size() - 11)).getBytes());
     }
-
-    private static boolean isAlphaAndNum(String name) {
-        char[] chars = name.toCharArray();
-        for (char c : chars) if (!(Character.isLetter(c) || Character.isDigit(c))) return false;
-        return true;
+    private static int isQuoted(String content, int start){
+        for (int i = 0; i < content.length(); i++) if (content.charAt(i) == '"') return ++i + start;
+        return -1;
     }
 }
